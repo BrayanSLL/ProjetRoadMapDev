@@ -21,4 +21,6 @@ public interface TaskService {
 
     List<Task> getAllTasks();
 
+    List<Task> getDoneTasks();
+
 }

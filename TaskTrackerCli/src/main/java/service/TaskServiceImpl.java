@@ -61,7 +61,22 @@ public class TaskServiceImpl implements TaskService {
                 .max()
                 .orElse(0) + 1;
     }
+    
+    @Override
+    public List<Task> getDoneTasks() {
+        return taskHelper.getTasksByStatus(model.TaskStatus.DONE);
+    }
 
+    @Override
+    public List<Task> getToDoTasks() {
+        return taskHelper.getTasksByStatus(model.TaskStatus.TODO);
+    }
+
+    @Override
+    public List<Task> getInProgressTasks() {
+        return taskHelper.getTasksByStatus(model.TaskStatus.IN_PROGRESS);
+    }
+    
     @Override
     public List<Task> getAllTasks() {
         // TODO Auto-generated method stub

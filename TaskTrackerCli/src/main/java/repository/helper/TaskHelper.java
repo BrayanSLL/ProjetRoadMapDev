@@ -1,7 +1,9 @@
 package repository.helper;
 
 import model.Task;
+import model.TaskStatus;
 
+import java.util.List;
 import java.util.Set;
 
 public class TaskHelper {
@@ -31,5 +33,12 @@ public class TaskHelper {
         );
         tasks.remove(originalTask);
         tasks.add(taskChangedStatus);
+    }
+
+    public List<Task> getTasksByStatus(TaskStatus status) {
+        return tasks.stream()
+                .filter(task -> task.getStatus().equals(status))
+                .sorted()
+                .toList();
     }
 }
