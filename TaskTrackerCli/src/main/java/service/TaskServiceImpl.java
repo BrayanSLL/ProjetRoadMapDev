@@ -2,6 +2,7 @@ package service;
 
 import model.Task;
 import repository.TaskRepository;
+import repository.helper.TaskHelper;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ public class TaskServiceImpl implements TaskService {
 
     public final TaskRepository taskRepository;
     private final Set<Task> tasks;
+    public TaskHelper taskHelper;
 
     public TaskServiceImpl(TaskRepository taskRepository, Set<Task> tasks) {
         this.taskRepository = taskRepository;
@@ -35,22 +37,22 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void removeTask(int id) {
-        // TODO Auto-generated method stub
+        tasks.remove(taskHelper.findTaskById(id));
     }
 
     @Override
     public void markTaskAsDone(int id) {
-        // TODO Auto-generated method stub
+        taskHelper.markTaskStatus(id, model.TaskStatus.DONE);
     }
 
     @Override
     public void markTaskAsToDo(int id) {
-        // TODO Auto-generated method stub
+        taskHelper.markTaskStatus(id, model.TaskStatus.TODO);
     }
 
     @Override
     public void markTaskAsDoing(int id) {
-        // TODO Auto-generated method stub
+        taskHelper.markTaskStatus(id, model.TaskStatus.IN_PROGRESS);
     }
 
     private int getNewId() {
@@ -65,4 +67,6 @@ public class TaskServiceImpl implements TaskService {
         // TODO Auto-generated method stub
         return null;
     }
+
+
 }

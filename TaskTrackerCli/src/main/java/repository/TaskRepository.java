@@ -9,5 +9,5 @@ public interface TaskRepository {
 
     void saveTasks(Set<Task> tasks) throws IOException;
 
-    Set<Task> getAllTasks();
+    Set<Task> getTasks() throws IOException;
 }

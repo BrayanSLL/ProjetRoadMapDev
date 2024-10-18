@@ -5,6 +5,7 @@ import model.Task;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.HashSet;
 import java.util.Set;
 import repository.helper.JsonMapper;
 
@@ -27,8 +28,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public Set<Task> getAllTasks() {
-        // TODO Auto-generated method stub
-        return null;
+    public Set<Task> getTasks() throws IOException {
+        if (!Files.exists(path))
+            return new HashSet<>();
+        return JsonMapper.jsonToTasks(Files.readString(path));
     }
 }
