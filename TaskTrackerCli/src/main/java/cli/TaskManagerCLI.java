@@ -1,5 +1,6 @@
 package cli;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import cli.helper.TaskListPrinter;
@@ -17,6 +18,94 @@ public class TaskManagerCLI {
         this.taskListPrinter = new TaskListPrinter();
     }
 
+    public void run(){
+        System.out.println("Welcome to Task Manager CLI!");
+        String command;
+        do {
+            System.out.print("Enter a command: ");
+            command = scanner.next();
+            switch (command) {
+                case "add" -> addTask();
+                case "update" -> updateTask();
+                case "delete" -> deleteTask();
+                case "mark-todo" -> markTaskAsTodo();
+                case "mark-done" -> markTaskAsDone();
+                case "mark-in-progress" -> markTaskAsInProgress();
+                case "list" -> listTasks();
+                case "list-todo" -> listToDoTasks();
+                case "list-in-progress" -> listInProgressTasks();
+                case "list-done" -> listDoneTasks();
+                case "help" -> printHelpMenu();
+                case "exit" -> exit();
+                default -> System.out.println("Invalid command! Type 'help' to see the list of commands.");
+            }
+        } while (!command.equals("exit"));
+        scanner.close();
+    }
+
+    private void addTask() {
+        System.out.print("Enter task description: ");
+        String description = scanner.next();
+        taskService.addTask(description);
+        System.out.println("Task added successfully!");
+    }
+
+    private void updateTask() {
+        try{
+            int id = scanner.nextInt();
+            String description = scanner.next();
+            taskService.updateTask(id, description);
+            System.out.println("Task updated successfully!");
+        }catch (NoSuchElementException e){
+            System.out.println("Invalid input! Please enter a valid task id and description.");
+        }
+    }
+
+    public void deleteTask() {
+        try{
+            int id = scanner.nextInt();
+            taskService.removeTask(id);
+            System.out.println("Task deleted successfully!");
+        }catch (NoSuchElementException e){
+            System.out.println("Invalid input! Please enter a valid task id.");
+        }
+    }
+
+    private void markTaskAsTodo() {
+        try{
+            int id = scanner.nextInt();
+            taskService.markTaskAsToDo(id);
+            System.out.println("Task marked as todo successfully!");
+        }catch (NoSuchElementException e){
+            System.out.println("Invalid input! Please enter a valid task id.");
+        }
+    }
+
+    private void markTaskAsDone() {
+        try{
+            int id = scanner.nextInt();
+            taskService.markTaskAsDone(id);
+            System.out.println("Task marked as done successfully!");
+        }catch (NoSuchElementException e){
+            System.out.println("Invalid input! Please enter a valid task id.");
+        }
+    }
+
+    private void markTaskAsInProgress() {
+        try{
+            int id = scanner.nextInt();
+            taskService.markTaskAsDoing(id);
+            System.out.println("Task marked as in progress successfully!");
+        }catch (NoSuchElementException e){
+            System.out.println("Invalid input! Please enter a valid task id.");
+        }
+    }
+
+    private void listTasks() {
+        taskListPrinter.printTaskList(taskService.getAllTasks());
+        scanner.nextLine();
+    }
+    
     private void listInProgressTasks() {
         taskListPrinter.printTaskList(taskService.getInProgressTasks());
         scanner.nextLine();

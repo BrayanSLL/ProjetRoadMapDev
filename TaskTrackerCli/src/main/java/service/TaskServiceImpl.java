@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import cli.helper.TaskListPrinter;
+
 import static model.TaskStatus.TODO;
 
 public class TaskServiceImpl implements TaskService {
@@ -17,10 +19,12 @@ public class TaskServiceImpl implements TaskService {
     private final Set<Task> tasks;
     public TaskHelper taskHelper;
 
-    public TaskServiceImpl(TaskRepository taskRepository, Set<Task> tasks) {
+    public TaskServiceImpl(TaskRepository taskRepository) throws IOException {
         this.taskRepository = taskRepository;
-        this.tasks = tasks;
+        this.tasks = taskRepository.getTasks();
     }
+
+    
 
     @Override
     public void saveTasks() throws IOException {
