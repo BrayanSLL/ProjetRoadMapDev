@@ -11,6 +11,8 @@ public interface TaskService {
 
     int addTask(String Description);
 
+    void updateTask(int id, String description);
+
     void removeTask(int id);
 
     void markTaskAsDone(int id);
@@ -23,4 +25,8 @@ public interface TaskService {
 
     List<Task> getDoneTasks();
 
+    List<Task> getToDoTasks();
+
+    List<Task> getInProgressTasks();
+    
 }

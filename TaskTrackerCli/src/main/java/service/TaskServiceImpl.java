@@ -83,5 +83,19 @@ public class TaskServiceImpl implements TaskService {
         return null;
     }
 
+    @Override
+    public void updateTask(int id, String description) {
+        Task originalTask = taskHelper.findTaskById(id);
+        Task updatedTask = new Task(
+                                    originalTask.getId(),
+                                    description,
+                                    originalTask.getStatus(), 
+                                    originalTask.getCreatedAt(), 
+                                    LocalDateTime.now());
+
+        tasks.remove(originalTask);
+        tasks.add(updatedTask);
+    }
+
 
 }
